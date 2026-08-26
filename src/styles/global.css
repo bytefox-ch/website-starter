@@ -128,3 +128,27 @@ h1, h2, h3 {
   }
   .rise-in { animation: none; }
 }
+
+/* ---------- SEKTIONS-RHYTHMUS ---------- */
+
+/*
+  Zwei aufeinanderfolgende Sektionen OHNE eigene Flaeche wuerden ihre
+  Polsterung addieren (96px + 96px = 192px reiner Leerraum). Die vordere
+  gibt ihre untere Polsterung darum ab — sichtbar bleibt genau ein
+  Sektionsabstand.
+
+  Sektionen MIT Flaeche behalten ihre Polsterung: dort ist sie kein
+  Zwischenraum, sondern der Innenabstand des farbigen Blocks.
+*/
+section[data-surface="base"]:has(+ section[data-surface="base"]),
+section[data-surface="base"]:has(+ script + section[data-surface="base"]) {
+  padding-bottom: 0;
+}
+
+/*
+  Die zweite Zeile ist kein Schoenheitsfehler: Astro hebt die <script>-Bloecke
+  von Komponenten aus deren Markup heraus und legt sie ZWISCHEN die Sektionen.
+  Das bricht den +-Kombinator, obwohl die Skripte selbst display:none sind.
+  Wer hier eine Sektion mit eigenem Skript einfuegt und den Abstand doppelt
+  sieht, hat genau diesen Fall.
+*/

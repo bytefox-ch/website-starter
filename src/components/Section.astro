@@ -44,7 +44,12 @@ const spaces = {
   lg: 'py-24 sm:py-36',
 };
 ---
-<Tag class:list={[surfaces[surface], spaces[space], reveal && 'reveal', klass]} aria-labelledby={labelledby}>
+<Tag
+  class:list={[surfaces[surface], spaces[space], reveal && 'reveal', klass]}
+  data-surface={surface}
+  data-space={space}
+  aria-labelledby={labelledby}
+>
   {bleed ? (
     <slot />
   ) : (
