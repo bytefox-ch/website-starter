@@ -11,7 +11,7 @@ interface Props {
   /** Flaechenebene. "anchor" ist der dunkle Block, der die Seite gliedert. */
   surface?: 'base' | 'raised' | 'anchor';
   /** Vertikaler Rhythmus. Skala, nicht ad hoc. */
-  space?: 'sm' | 'md' | 'lg';
+  space?: 'none' | 'sm' | 'md' | 'lg';
   /** Volle Fensterbreite statt zentrierter Spalte (z.B. fuer Bildbaender). */
   bleed?: boolean;
   as?: 'section' | 'div' | 'article' | 'aside';
@@ -35,6 +35,7 @@ const surfaces = {
 };
 
 const spaces = {
+  none: '',
   sm: 'py-12 sm:py-16',
   md: 'py-16 sm:py-24',
   lg: 'py-24 sm:py-36',
