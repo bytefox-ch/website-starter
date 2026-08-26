@@ -1,0 +1,66 @@
+---
+/*
+  Figure — Bild mit festem Seitenverhaeltnis.
+
+  WICHTIG: Ohne `src` rendert die Komponente einen SICHTBAREN Bildplatz statt
+  gar nichts. Genau das ist der Zweck. Ein Entwurf, in dem fehlende Fotos
+  einfach weggelassen wurden, laesst den Kunden den falschen Entwurf
+  beurteilen — er sieht eine Textwueste und haelt sie fuer das Design.
+
+  Siehe webdesign-Skill, Abschnitt "Bildkonzept".
+*/
+interface Props {
+  src?: string;
+  alt?: string;
+  /** Was auf dieses Bild gehoert — erscheint im Platzhalter. Pflicht. */
+  brief: string;
+  ratio?: '21/9' | '16/9' | '4/3' | '4/5' | '1/1';
+  caption?: string;
+  /** Beim Hero true setzen: laedt sofort statt lazy. */
+  priority?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  brief,
+  ratio = '16/9',
+  caption,
+  priority = false,
+  class: klass = '',
+} = Astro.props;
+
+if (src && !alt) {
+  throw new Error(`Figure: alt-Text fehlt fuer "${src}". Kein Bild ohne alt.`);
+}
+---
+<figure class={klass}>
+  {src ? (
+    <img
+      src={src}
+      alt={alt}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding={priority ? 'sync' : 'async'}
+      fetchpriority={priority ? 'high' : undefined}
+      style={`aspect-ratio:${ratio}`}
+      class="w-full object-cover"
+    />
+  ) : (
+    <div
+      style={`aspect-ratio:${ratio}`}
+      class="flex w-full items-center justify-center border-2 border-dashed border-muted/50 bg-muted/10 p-6"
+      role="img"
+      aria-label={`Bildplatz: ${brief}`}
+    >
+      <p class="max-w-xs text-center text-sm">
+        <span class="block font-mono text-xs uppercase tracking-widest opacity-60">
+          Bildplatz {ratio}
+        </span>
+        <span class="mt-2 block">{brief}</span>
+      </p>
+    </div>
+  )}
+
+  {caption && <figcaption class="mt-2 text-sm opacity-75">{caption}</figcaption>}
+</figure>

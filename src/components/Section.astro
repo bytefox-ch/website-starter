@@ -1,0 +1,51 @@
+---
+/*
+  Section — traegt den vertikalen Rhythmus und die Flaechenebene.
+
+  Zweck: verhindern, dass eine Seite aus lauter identischen Textbloecken auf
+  identischem Grund besteht. Der webdesign-Skill verlangt mindestens sechs
+  UNTERSCHEIDBARE Sektionen auf der Startseite und mindestens drei
+  Flaechenebenen (Grund / Flaeche / Anker).
+*/
+interface Props {
+  /** Flaechenebene. "anchor" ist der dunkle Block, der die Seite gliedert. */
+  surface?: 'base' | 'raised' | 'anchor';
+  /** Vertikaler Rhythmus. Skala, nicht ad hoc. */
+  space?: 'sm' | 'md' | 'lg';
+  /** Volle Fensterbreite statt zentrierter Spalte (z.B. fuer Bildbaender). */
+  bleed?: boolean;
+  as?: 'section' | 'div' | 'article' | 'aside';
+  labelledby?: string;
+  class?: string;
+}
+
+const {
+  surface = 'base',
+  space = 'md',
+  bleed = false,
+  as: Tag = 'section',
+  labelledby,
+  class: klass = '',
+} = Astro.props;
+
+const surfaces = {
+  base: '',
+  raised: 'bg-surface',
+  anchor: 'bg-ink text-base',
+};
+
+const spaces = {
+  sm: 'py-12 sm:py-16',
+  md: 'py-16 sm:py-24',
+  lg: 'py-24 sm:py-36',
+};
+---
+<Tag class:list={[surfaces[surface], spaces[space], klass]} aria-labelledby={labelledby}>
+  {bleed ? (
+    <slot />
+  ) : (
+    <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <slot />
+    </div>
+  )}
+</Tag>

@@ -7,9 +7,14 @@
   sie zu ersetzen.
 */
 @theme {
-  /* Farben — aus dem freigegebenen Konzept übernehmen */
-  --color-base: #ffffff;        /* Hintergrund */
-  --color-ink: #111111;         /* Text */
+  /*
+    Farben — aus dem freigegebenen Konzept übernehmen.
+    MINDESTENS drei Flächenebenen (base/surface/ink als Anker), sonst wirkt
+    die Seite flach. Siehe webdesign-Skill, Abschnitt "Flächen und Tiefe".
+  */
+  --color-base: #ffffff;        /* Grund — Seitenhintergrund */
+  --color-surface: #f4f4f5;     /* Fläche — abgesetzte Blöcke, Karten */
+  --color-ink: #111111;         /* Text UND Anker-Block */
   --color-accent: #ff00ff;      /* ⚠️ Platzhalter-Magenta: ERSETZEN */
   --color-muted: #666666;
 
