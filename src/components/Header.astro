@@ -1,0 +1,17 @@
+---
+// Bewusst minimal: Navigation entsteht pro Kunde aus dem Design-Konzept.
+// KEIN Standard-Layout hier festschreiben.
+const nav = [
+  { href: '/', label: 'Start' },
+  { href: '/kontakt', label: 'Kontakt' },
+];
+---
+<header>
+  <nav aria-label="Hauptnavigation">
+    <ul class="flex gap-6 p-4">
+      {nav.map((item) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>

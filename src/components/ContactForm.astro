@@ -1,0 +1,22 @@
+---
+// Formspree: Beim Onboarding Endpoint erstellen (formspree.io) und
+// FORM_ENDPOINT ersetzen. Kein JS nötig — progressive enhancement pur.
+const FORM_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
+---
+<form action={FORM_ENDPOINT} method="POST" class="grid gap-4 max-w-xl">
+  <label class="grid gap-1">
+    <span>Name</span>
+    <input type="text" name="name" required autocomplete="name" class="border p-2" />
+  </label>
+  <label class="grid gap-1">
+    <span>E-Mail</span>
+    <input type="email" name="email" required autocomplete="email" class="border p-2" />
+  </label>
+  <label class="grid gap-1">
+    <span>Nachricht</span>
+    <textarea name="message" rows="5" required class="border p-2"></textarea>
+  </label>
+  <!-- Honeypot gegen Spam -->
+  <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+  <button type="submit" class="border p-2 font-bold">Nachricht senden</button>
+</form>

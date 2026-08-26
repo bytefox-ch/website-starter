@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Impressum" description="Impressum und Kontaktangaben.">
+  <section class="p-8 prose">
+    <h1>Impressum</h1>
+    <p>
+      {'{{FIRMA / RECHTSFORM}}'}<br />
+      {'{{STRASSE NR}}'}<br />
+      {'{{PLZ ORT}}'}, Schweiz
+    </p>
+    <p>
+      Telefon: {'{{TELEFON}}'}<br />
+      E-Mail: {'{{EMAIL}}'}
+    </p>
+    <p>Vertretungsberechtigte Person: {'{{NAME}}'}</p>
+    <p>UID: {'{{CHE-XXX.XXX.XXX (falls vorhanden)}}'}</p>
+  </section>
+</BaseLayout>

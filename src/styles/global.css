@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/*
+  DESIGN-TOKENS — Platzhalter!
+  Diese Werte MÜSSEN pro Kunde aus docs/design-konzept.md gesetzt werden.
+  Die Startwerte sind absichtlich hässlich-neutral, damit niemand vergisst,
+  sie zu ersetzen.
+*/
+@theme {
+  /* Farben — aus dem freigegebenen Konzept übernehmen */
+  --color-base: #ffffff;        /* Hintergrund */
+  --color-ink: #111111;         /* Text */
+  --color-accent: #ff00ff;      /* ⚠️ Platzhalter-Magenta: ERSETZEN */
+  --color-muted: #666666;
+
+  /* Typografie — Fonts in BaseLayout.astro einbinden, dann hier eintragen */
+  --font-display: system-ui, sans-serif;  /* ⚠️ ERSETZEN */
+  --font-body: system-ui, sans-serif;     /* ⚠️ ERSETZEN */
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-base);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+/* Sichtbarer Keyboard-Fokus (Qualitäts-Boden, nicht entfernen) */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

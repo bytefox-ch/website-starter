@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+<BaseLayout title="Kontakt" description="{{Kontakt-Beschreibung mit Ort und Telefonnummer}}">
+  <section class="p-8">
+    <h1 class="text-4xl">Kontakt</h1>
+    <div class="mt-6 grid gap-8 md:grid-cols-2">
+      <div>
+        <p>{'{{ADRESSE}}'}</p>
+        <p class="mt-2"><a href="tel:{{TELEFON}}">{'{{TELEFON}}'}</a></p>
+        <p><a href="mailto:{{EMAIL}}">{'{{EMAIL}}'}</a></p>
+        <h2 class="mt-6 text-xl">Öffnungszeiten</h2>
+        <p>{'{{ÖFFNUNGSZEITEN}}'}</p>
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+</BaseLayout>
