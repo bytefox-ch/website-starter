@@ -20,6 +20,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <html lang="de-CH">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      // Muss VOR dem Rendern laufen: die reveal-Startzustaende haengen an
+      // html.js. Ohne JavaScript bleibt darum nichts unsichtbar.
+      document.documentElement.classList.add('js');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — {siteName}</title>
     <meta name="description" content={description} />
@@ -46,5 +51,46 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
+
+    <script>
+      // Scroll-Reveal: einmalig, danach abmelden. Kein Dauer-Listener.
+      const items = document.querySelectorAll<HTMLElement>('.reveal');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!items.length) {
+        // nichts zu tun
+      } else if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const zeigen = (el: Element) => {
+          el.classList.add('is-visible');
+          io.unobserve(el);
+        };
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              // Auch aufloesen, wenn das Element bereits nach OBEN aus dem
+              // Bild ist: schnelles Scrollen, Ankerspruenge und
+              // wiederhergestellte Scrollpositionen ueberspringen sonst
+              // Elemente, und die blieben dauerhaft unsichtbar.
+              const vorbei = entry.boundingClientRect.top < 0;
+              if (entry.isIntersecting || vorbei) zeigen(entry.target);
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0 },
+        );
+
+        items.forEach((el) => io.observe(el));
+
+        // Sicherheitsnetz: was beim Laden schon im oder ueber dem Bild
+        // liegt, wird sofort aufgeloest.
+        addEventListener('load', () => {
+          items.forEach((el) => {
+            if (el.getBoundingClientRect().top < innerHeight) zeigen(el);
+          });
+        });
+      }
+    </script>
   </body>
 </html>

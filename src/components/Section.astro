@@ -14,6 +14,8 @@ interface Props {
   space?: 'none' | 'sm' | 'md' | 'lg';
   /** Volle Fensterbreite statt zentrierter Spalte (z.B. fuer Bildbaender). */
   bleed?: boolean;
+  /** Sektion beim Hereinscrollen einblenden. Nicht fuer den Hero. */
+  reveal?: boolean;
   as?: 'section' | 'div' | 'article' | 'aside';
   labelledby?: string;
   class?: string;
@@ -23,6 +25,7 @@ const {
   surface = 'base',
   space = 'md',
   bleed = false,
+  reveal = false,
   as: Tag = 'section',
   labelledby,
   class: klass = '',
@@ -41,7 +44,7 @@ const spaces = {
   lg: 'py-24 sm:py-36',
 };
 ---
-<Tag class:list={[surfaces[surface], spaces[space], klass]} aria-labelledby={labelledby}>
+<Tag class:list={[surfaces[surface], spaces[space], reveal && 'reveal', klass]} aria-labelledby={labelledby}>
   {bleed ? (
     <slot />
   ) : (

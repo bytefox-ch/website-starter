@@ -65,3 +65,66 @@ h1, h2, h3 {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- MOTION ---------- */
+
+/*
+  Zeit- und Kurvenskala. Nicht ad hoc animieren, sondern aus diesen Werten
+  waehlen. Animiert werden ausschliesslich transform und opacity — alles
+  andere loest Layout-Neuberechnungen aus und ruckelt.
+*/
+@theme {
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;   /* Zustandswechsel: Hover, Fokus */
+  --dur-base: 380ms;   /* Scroll-Reveal */
+  --dur-slow: 620ms;   /* orchestrierter Auftritt beim Laden */
+}
+
+/*
+  Scroll-Reveal.
+  Die Startzustaende haengen an html.js — ohne JavaScript ist NICHTS
+  versteckt. Sonst bleibt die halbe Seite leer, wenn der Observer nicht
+  laeuft oder ein Skript vorher stirbt.
+*/
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--dur-base) var(--ease-entrance),
+    transform var(--dur-base) var(--ease-entrance);
+  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+  Auftritt beim Laden — reine CSS-Animation, damit sie auch ohne JS endet.
+  Nur fuer den Hero verwenden, nicht fuer die ganze Seite.
+*/
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.rise-in {
+  animation: rise-in var(--dur-slow) var(--ease-entrance) both;
+  animation-delay: calc(var(--rise-i, 0) * 90ms);
+}
+
+/*
+  Reduzierte Bewegung: kein Wegblenden, kein Versatz — Inhalte sind
+  sofort da. Nicht bloss die Dauer verkuerzen, sondern die Bewegung
+  wirklich weglassen.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rise-in { animation: none; }
+}
