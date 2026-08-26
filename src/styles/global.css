@@ -5,13 +5,32 @@
   Diese Werte MÜSSEN pro Kunde aus docs/design-konzept.md gesetzt werden.
   Die Startwerte sind absichtlich hässlich-neutral, damit niemand vergisst,
   sie zu ersetzen.
+
+  ===================== TOKEN-VERTRAG =====================
+  Fünf Namen sprechen die Komponenten in src/components/ direkt an:
+  base, surface, ink, accent, muted.
+
+  Die WERTE gehören ersetzt. Die NAMEN nicht.
+
+  Wer semantisch umbenennen will, etwa "signal" statt "accent",
+  muss den alten Namen als Alias mit demselben Wert behalten:
+
+      --color-signal: #ffde1d;
+      --color-accent: #ffde1d;      Alias für die Primitives
+
+  Sonst rendern Primary-Buttons ohne Hintergrund — und auf einem
+  dunklen Anker-Block wird daraus ein unsichtbarer Button.
+
+  Hinweis: CSS-Kommentare lassen sich NICHT verschachteln. Kein
+  Sternchen-Schrägstrich-Paar innerhalb eines Kommentars verwenden,
+  sonst endet er zu früh und Tailwind bricht den Build ab.
+
+  Farben: mindestens drei Flächenebenen (base / surface / ink als
+  Anker), sonst wirkt die Seite flach. Siehe webdesign-Skill,
+  Abschnitt "Flächen und Tiefe".
+  =========================================================
 */
 @theme {
-  /*
-    Farben — aus dem freigegebenen Konzept übernehmen.
-    MINDESTENS drei Flächenebenen (base/surface/ink als Anker), sonst wirkt
-    die Seite flach. Siehe webdesign-Skill, Abschnitt "Flächen und Tiefe".
-  */
   --color-base: #ffffff;        /* Grund — Seitenhintergrund */
   --color-surface: #f4f4f5;     /* Fläche — abgesetzte Blöcke, Karten */
   --color-ink: #111111;         /* Text UND Anker-Block */
